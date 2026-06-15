@@ -1,4 +1,5 @@
 :root {
+  --primary: #315f52;
   --bg: #fbf6ee;
   --paper: #fffdf8;
   --text: #172033;
@@ -16,9 +17,9 @@ body {
   margin: 0;
   color: var(--text);
   background:
-    radial-gradient(circle at 8% 0%, rgba(210, 185, 141, 0.20), transparent 34%),
-    radial-gradient(circle at 92% 12%, rgba(102, 142, 116, 0.12), transparent 30%),
-    linear-gradient(180deg, #fffaf2 0%, #f8f1e7 46%, #f6efe5 100%);
+    radial-gradient(circle at 8% 0%, rgba(115, 145, 175, 0.07), transparent 36%),
+    radial-gradient(circle at 92% 12%, rgba(170, 185, 200, 0.06), transparent 34%),
+    linear-gradient(180deg, #ffffff 0%, #fafcff 45%, #f6f9fc 100%);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
   line-height: 1.7;
 }
@@ -391,22 +392,29 @@ body.lang-en .brand .en { display: inline; }
 }
 
 /* ==============================
-   Publications 圆形数字编号
-   放在 styles.css 最后面
+   Publications 连续圆形编号
+   Selected 和 Other 不重新编号
    ============================== */
 
-.pub-list {
+/* 整个发表论文区域只初始化一次编号 */
+.pub-section {
   counter-reset: pub-number;
 }
 
-.pub-item {
+/* 两个 pub-list 不再重新计数 */
+.pub-section .pub-list {
+  counter-reset: none !important;
+}
+
+/* 每一篇论文自动 +1 */
+.pub-section .pub-item {
   counter-increment: pub-number;
   position: relative;
   padding-left: 72px;
 }
 
 /* 圆形编号 */
-.pub-item::before {
+.pub-section .pub-item::before {
   content: counter(pub-number) !important;
 
   position: absolute;
@@ -417,7 +425,7 @@ body.lang-en .brand .en { display: inline; }
   height: 36px;
   border-radius: 50%;
 
-  background: #6b8a54 !important;
+  background: #4f6242 !important;
   color: #ffffff !important;
 
   display: flex !important;
@@ -432,22 +440,426 @@ body.lang-en .brand .en { display: inline; }
   z-index: 10;
 }
 
-/* 鼠标悬停时轻微上浮 */
-.pub-item:hover::before {
+/* 鼠标悬停 */
+.pub-section .pub-item:hover::before {
   transform: translateY(-1px);
 }
 
 /* 手机端适配 */
 @media (max-width: 640px) {
-  .pub-item {
+  .pub-section .pub-item {
     padding-left: 58px;
   }
 
-  .pub-item::before {
+  .pub-section .pub-item::before {
     top: 18px;
     left: 16px;
     width: 30px;
     height: 30px;
     font-size: 14px;
   }
+}
+
+/* ==============================
+   教育背景区域重新设计
+   ============================== */
+
+#cv {
+  max-width: 1180px;
+  padding-top: 72px;
+  padding-bottom: 72px;
+}
+
+/* 标题区域 */
+#cv .section-heading {
+  margin-bottom: 24px;
+}
+
+#cv .section-heading .eyebrow {
+  letter-spacing: 0.16em;
+  font-size: 13px;
+  font-weight: 800;
+  color: #35664f;
+}
+
+#cv .section-heading h2 {
+  font-size: clamp(34px, 4vw, 52px);
+  line-height: 1.1;
+  margin: 8px 0 0;
+}
+
+/* 两张教育卡片并列 */
+#cv .edu-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 26px;
+}
+
+/* 单张教育卡片 */
+#cv .edu-card {
+  padding: 30px 32px;
+  border-radius: 24px;
+  background: rgba(255, 253, 248, 0.88);
+  border: 1px solid rgba(214, 198, 169, 0.8);
+  box-shadow: 0 18px 46px rgba(74, 60, 38, 0.08);
+}
+
+/* 日期标签 */
+#cv .edu-top .date {
+  display: inline-block;
+  margin-bottom: 14px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: #e9f4ee;
+  color: #255c45;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+/* 学校和学位 */
+#cv .edu-top h3 {
+  margin: 0 0 10px;
+  font-size: 22px;
+  line-height: 1.35;
+  color: #071a35;
+}
+
+/* GPA */
+#cv .edu-meta {
+  margin: 0 0 18px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #5c5248;
+}
+
+/* 荣誉部分 */
+#cv .award-block {
+  border-top: 1px solid rgba(214, 198, 169, 0.85);
+  padding-top: 18px;
+}
+
+#cv .award-title {
+  margin: 0 0 12px;
+  font-size: 15px;
+  font-weight: 800;
+  color: #071a35;
+}
+
+/* 荣誉列表压缩排版 */
+#cv .award-list {
+  margin: 0;
+  padding-left: 18px;
+}
+
+#cv .award-list li {
+  margin-bottom: 8px;
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: #3d3833;
+}
+
+/* 鼠标悬停更有层次 */
+#cv .edu-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 24px 60px rgba(74, 60, 38, 0.12);
+}
+
+/* 手机端恢复单列 */
+@media (max-width: 900px) {
+  #cv {
+    max-width: 92%;
+  }
+
+  #cv .edu-list {
+    grid-template-columns: 1fr;
+  }
+
+  #cv .edu-card {
+    padding: 26px 22px;
+  }
+}
+
+/* ==============================
+   Projects & Service 区域对齐优化
+   ============================== */
+
+#projects.section.narrow {
+  max-width: 1180px;
+  width: min(1180px, calc(100% - 48px));
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 72px;
+  padding-bottom: 72px;
+}
+
+/* 标题与上方教育背景保持一致 */
+#projects .section-heading {
+  margin-bottom: 28px;
+}
+
+#projects .section-heading .eyebrow {
+  letter-spacing: 0.16em;
+  font-size: 13px;
+  font-weight: 800;
+  color: #35664f;
+}
+
+#projects .section-heading h2 {
+  font-size: clamp(34px, 4vw, 52px);
+  line-height: 1.1;
+  margin: 8px 0 0;
+}
+
+/* 四个卡片重新排版 */
+#projects .cards.two-columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 26px;
+}
+
+/* 卡片样式统一 */
+#projects .card {
+  padding: 30px 32px;
+  border-radius: 24px;
+  background: rgba(255, 253, 248, 0.9);
+  border: 1px solid rgba(214, 198, 169, 0.8);
+  box-shadow: 0 18px 46px rgba(74, 60, 38, 0.08);
+  min-height: 260px;
+}
+
+/* 小标题 */
+#projects .card h3 {
+  margin: 0 0 16px;
+  font-size: 24px;
+  line-height: 1.3;
+  color: #071a35;
+}
+
+/* 列表 */
+#projects .clean-list {
+  margin: 0;
+  padding-left: 20px;
+}
+
+#projects .clean-list li {
+  margin-bottom: 12px;
+  font-size: 15.5px;
+  line-height: 1.75;
+  color: #071a35;
+}
+
+/* 卡片悬停效果 */
+#projects .card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 24px 60px rgba(74, 60, 38, 0.12);
+}
+
+/* 手机端单列 */
+@media (max-width: 900px) {
+  #projects.section.narrow {
+    width: min(100% - 32px, 720px);
+  }
+
+  #projects .cards.two-columns {
+    grid-template-columns: 1fr;
+  }
+
+  #projects .card {
+    padding: 26px 22px;
+    min-height: auto;
+  }
+}
+/* ==============================
+   Skills & Contact 区域对齐优化
+   ============================== */
+
+#skills.section.narrow,
+#contact.section.narrow {
+  max-width: 1180px;
+  width: min(1180px, calc(100% - 48px));
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 72px;
+  padding-bottom: 72px;
+}
+
+/* 标题统一 */
+#skills .section-heading,
+#contact .section-heading {
+  margin-bottom: 28px;
+}
+
+#skills .section-heading .eyebrow,
+#contact .section-heading .eyebrow {
+  letter-spacing: 0.16em;
+  font-size: 13px;
+  font-weight: 800;
+  color: #35664f;
+}
+
+#skills .section-heading h2,
+#contact .section-heading h2 {
+  font-size: clamp(34px, 4vw, 52px);
+  line-height: 1.1;
+  margin: 8px 0 0;
+}
+
+/* 研究技能标签区域 */
+#skills .skill-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+#skills .skill-cloud span {
+  padding: 8px 15px;
+  border-radius: 999px;
+  background: #e9f4ee;
+  color: #255c45;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+/* 研究方法卡片 */
+#skills .cards.two-columns,
+#skills .method-cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 26px;
+}
+
+#skills .card,
+#contact .contact-card {
+  padding: 30px 32px;
+  border-radius: 24px;
+  background: rgba(255, 253, 248, 0.9);
+  border: 1px solid rgba(214, 198, 169, 0.8);
+  box-shadow: 0 18px 46px rgba(74, 60, 38, 0.08);
+}
+
+#skills .card h3 {
+  margin: 0 0 14px;
+  font-size: 22px;
+  line-height: 1.35;
+  color: #071a35;
+}
+
+#skills .card p,
+#contact .contact-card p {
+  margin: 0 0 12px;
+  font-size: 15.5px;
+  line-height: 1.75;
+  color: #071a35;
+}
+
+/* 联系方式卡片不要太窄 */
+#contact .contact-card {
+  max-width: none;
+  width: 100%;
+}
+
+/* 悬停效果统一 */
+#skills .card:hover,
+#contact .contact-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 24px 60px rgba(74, 60, 38, 0.12);
+}
+
+/* 手机端适配 */
+@media (max-width: 900px) {
+  #skills.section.narrow,
+  #contact.section.narrow {
+    width: min(100% - 32px, 720px);
+  }
+
+  #skills .cards.two-columns,
+  #skills .method-cards {
+    grid-template-columns: 1fr;
+  }
+
+  #skills .card,
+  #contact .contact-card {
+    padding: 26px 22px;
+  }
+}
+
+/* ==============================
+   首页照片卡片配色优化：浅色学术风
+   ============================== */
+
+.profile-panel {
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(210, 222, 232, 0.9);
+  box-shadow: 0 24px 70px rgba(40, 60, 80, 0.10);
+}
+
+.photo-frame {
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(210, 222, 232, 0.9);
+}
+
+.profile-note {
+  background: rgba(248, 251, 253, 0.92);
+  border: 1px solid rgba(210, 222, 232, 0.9);
+  color: #263442;
+}
+
+.profile-note p {
+  color: #334155;
+}
+
+.profile-chips span {
+  background: #ffffff;
+  border: 1px solid rgba(210, 222, 232, 0.95);
+  color: #315f52;
+}
+/* ==============================
+   Publications 分组标题优化
+   ============================== */
+
+/* 发表论文总标题区域下面稍微收紧 */
+.pub-header {
+  margin-bottom: 18px;
+}
+
+/* 主要论文 / 其他论文 */
+.pub-subtitle {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+
+  margin: 18px 0 14px;
+  padding: 10px 18px;
+  border-radius: 14px;
+
+  background: rgba(243, 248, 252, 0.95);
+  border: 1px solid rgba(210, 222, 232, 0.95);
+
+  color: #16324f;
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 1.2;
+
+  box-shadow: 0 8px 20px rgba(40, 60, 80, 0.06);
+}
+
+/* 左边加一个小竖条，增加识别度 */
+.pub-subtitle::before {
+  content: "";
+  width: 5px;
+  height: 22px;
+  border-radius: 999px;
+  background: #315f52;
+  display: inline-block;
+}
+
+/* 第一个分组标题离上面近一点 */
+.pub-header + .pub-subtitle {
+  margin-top: 8px;
+}
+
+/* 两个分组之间稍微拉开 */
+.other-publications {
+  margin-top: 10px;
 }
