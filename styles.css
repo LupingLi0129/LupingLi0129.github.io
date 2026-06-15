@@ -389,3 +389,65 @@ body.lang-en .brand .en { display: inline; }
   .pub-item { grid-template-columns: 1fr; }
   .pub-cover { width: min(120px, 100%); }
 }
+
+/* ==============================
+   Publications 圆形数字编号
+   放在 styles.css 最后面
+   ============================== */
+
+.pub-list {
+  counter-reset: pub-number;
+}
+
+.pub-item {
+  counter-increment: pub-number;
+  position: relative;
+  padding-left: 72px;
+}
+
+/* 圆形编号 */
+.pub-item::before {
+  content: counter(pub-number) !important;
+
+  position: absolute;
+  top: 22px;
+  left: 22px;
+
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+
+  background: #6b8a54 !important;
+  color: #ffffff !important;
+
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1;
+
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
+  z-index: 10;
+}
+
+/* 鼠标悬停时轻微上浮 */
+.pub-item:hover::before {
+  transform: translateY(-1px);
+}
+
+/* 手机端适配 */
+@media (max-width: 640px) {
+  .pub-item {
+    padding-left: 58px;
+  }
+
+  .pub-item::before {
+    top: 18px;
+    left: 16px;
+    width: 30px;
+    height: 30px;
+    font-size: 14px;
+  }
+}
